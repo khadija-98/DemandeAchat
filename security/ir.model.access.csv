@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_demande_achat,demande.achat,model_demande_achat,base.group_user,1,1,1,1
+access_demande_achat_line,demande.achat.line,model_demande_achat_line,base.group_user,1,1,1,1

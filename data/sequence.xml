@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <data>
+        <record id="sequence_demande_achat" model ="ir.sequence">
+            <field name="name">Demande Achat</field>
+            <field name="code">demande.achat</field>
+            <field name="prefix">DA</field>
+            <field name="padding">4</field>
+        </record>
+    </data>
+</odoo>

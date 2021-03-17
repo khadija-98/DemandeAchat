@@ -1,0 +1,142 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="da_view_tree">
+      <field name="name">liste des demandes</field>
+      <field name="model">demande.achat</field>
+      <field name="arch" type="xml">
+        <tree decoration-muted = "etat_dmd == 'draft'"
+              decoration-warning = "etat_dmd == 'open'"
+              decoration-info = "etat_dmd == 'confirmed'"
+              decoration-success = "etat_dmd == 'done'">
+          <field name="name"/>
+          <field name="demandeur"/>
+          <field name="date_dmd"/>
+          <field name="etat_dmd"/>
+          <field name="approbateur"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="da_view_form">
+      <field name="name">Formulaire demande d'achat</field>
+      <field name="model">demande.achat</field>
+      <field name="arch" type="xml">
+        <form string="Demande d'achat ">
+          <sheet>
+            <div class="oe_title">
+              <h1>
+                <field name="name"/>
+              </h1>
+            </div>
+            <group>
+              <group>
+                <field name="demandeur"/>
+                <field name="date_dmd"/>
+              </group>
+              <group>
+                <field name="etat_dmd"/>
+                <field name="approbateur"/>
+              </group>
+            </group>
+            <notebook>
+              <page string ="Produits">
+                <field name="demande_line">
+                  <tree editable="bottom">
+                    <field name="product_id"/>
+                    <field name="product_qty"/>
+                    <field name="product_unite"/>
+                    <field name="demande_id" invisible="1"/>
+                  </tree>
+                  <form>
+                    <group>
+                      <group>
+                        <field name="product_id"/>
+                      </group>
+                      <group>
+                        <field name="product_qty"/>
+                      </group>
+                      <group>
+                        <field name="product_unite"/>
+                      </group>
+                    </group>
+                  </form>
+                </field>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="da_view_search">
+      <field name="name">Search demandes</field>
+      <field name="model">demande.achat</field>
+      <field name="arch" type="xml">
+        <search>
+          <filter name="etat_dmd"
+                  string="Draft"
+                  domain = "[('etat_dmd','=','draft')]"/>
+          <filter name="etat_dmd_2"
+                  string="Open"
+                  domain = "[('etat_dmd','=','open')]"/>
+          <filter name="etat_dmd_3"
+                  string="Confirmed"
+                  domain = "[('etat_dmd','=','confirmed')]"/>
+          <filter name="etat_dmd_4"
+                  string="Done"
+                  domain = "[('etat_dmd','=','done')]"/>
+
+          <group string="Group by">
+              <filter name="demandeur"
+                      string="Demandeur"
+                      context="{'group_by':'demandeur'}"/>
+              <filter name="approbateur"
+                      string="Approbateur"
+                      context="{'group_by':'approbateur'}"/>               
+          </group>
+        </search>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="demande_action_window">
+      <field name="name">DA window</field>
+      <field name="res_model">demande.achat</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="da.action_server">
+      <field name="name">DA server</field>
+      <field name="model_id" ref="model_da_da"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+
+    <menuitem name="Demande d'achat" 
+              id="demande_menu_root"/>
+
+    <!-- menu categories -->
+
+    <menuitem name="DA" 
+              action = "demande_action_window"
+              id="demande_menu_1" 
+              parent="demande_menu_root"/>
+
+  </data>
+</odoo>
